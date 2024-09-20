@@ -53,7 +53,7 @@ export default function Tasks({ filters }: { filters: FiltersType }) {
     return <p>No tasks found</p>;
   } else {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4 items-start ">
         {tasks.map((task: any) => (
           <TaskCard item={task} key={task.id} />
         ))}

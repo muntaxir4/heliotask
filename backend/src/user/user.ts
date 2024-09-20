@@ -53,9 +53,42 @@ user.post("/create-task", async (req, res) => {
   }
 });
 
+user.get("/tasks", async (req, res) => {
+  try {
+    //@ts-ignore
+    const {
+      status,
+    }: { status: undefined | "TO_DO" | "IN_PROGRESS" | "COMPLETED" } =
+      req.query;
+    if (!status) return res.status(400).json({ message: "Status is required" });
+    const statusTasks = await prisma.task.findMany({
+      where: { userId: req.body.userId, status: status },
+    });
+    return res.status(200).json({ message: "Request Successful", statusTasks });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+user.post("/change-task-status", async (req, res) => {
+  try {
+    const { taskId, status } = req.body;
+    if (!taskId || !status)
+      return res.status(400).json({ message: "Task ID and status required" });
+    const task = await prisma.task.update({
+      where: { id: taskId },
+      data: { status },
+    });
+    res.status(200).json({ message: "Task status updated", task });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 user.post("/tasks", async (req, res) => {
   try {
-    // @ts-ignore
     const {
       page = 1,
       status,
