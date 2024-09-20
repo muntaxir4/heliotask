@@ -1,5 +1,10 @@
-import Image from "next/image";
+import GoogleSignin from "@/components/GoogleSignin";
 
 export default function Home() {
-  return <div>Landing Page</div>;
+  return (
+    <div>
+      <p>Landing Page</p>
+      <GoogleSignin />
+    </div>
+  );
 }

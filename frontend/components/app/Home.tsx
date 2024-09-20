@@ -1,6 +1,11 @@
 "use client";
 import { useState } from "react";
-import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
+import {
+  DragDropContext,
+  Droppable,
+  DropResult,
+  resetServerContext,
+} from "react-beautiful-dnd";
 import TaskCard from "./TaskCard";
 
 const tasks = [
@@ -14,7 +19,7 @@ const tasks = [
         description: "Description for Task 1",
         status: "todo",
         priority: "high",
-        due_date: "2023-10-01",
+        dueDate: "2023-10-01",
       },
       {
         id: 2,
@@ -22,7 +27,7 @@ const tasks = [
         description: "Description for Task 2",
         status: "todo",
         priority: "medium",
-        due_date: "2023-10-05",
+        dueDate: "2023-10-05",
       },
     ],
   },
@@ -36,7 +41,7 @@ const tasks = [
         description: "Description for Task 3",
         status: "inprogress",
         priority: "low",
-        due_date: "2023-10-10",
+        dueDate: "2023-10-10",
       },
       {
         id: 4,
@@ -44,7 +49,7 @@ const tasks = [
         description: "Description for Task 4",
         status: "inprogress",
         priority: "high",
-        due_date: "2023-10-15",
+        dueDate: "2023-10-15",
       },
     ],
   },
@@ -58,7 +63,7 @@ const tasks = [
         description: "Description for Task 5",
         status: "completed",
         priority: "medium",
-        due_date: "2023-09-20",
+        dueDate: "2023-09-20",
       },
       {
         id: 6,
@@ -66,13 +71,14 @@ const tasks = [
         description: "Description for Task 6",
         status: "completed",
         priority: "low",
-        due_date: "2023-09-25",
+        dueDate: "2023-09-25",
       },
     ],
   },
 ];
 
 export default function Home() {
+  resetServerContext();
   const [columns, setColumns] = useState(tasks);
   const onDragEnd = (result: DropResult) => {
     console.log(result);
@@ -126,6 +132,7 @@ export default function Home() {
                 {column.data.map((item, index) => (
                   <TaskCard key={index} item={item} index={index} />
                 ))}
+                {provided.placeholder}
               </div>
             )}
           </Droppable>

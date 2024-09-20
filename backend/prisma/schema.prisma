@@ -12,3 +12,35 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
+model User{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  email String @unique
+  avatarUrl String
+  tasks Task[]
+}
+
+model Task{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+  description String?
+  status TaskStatus @default(TO_DO)
+  priority TaskPriority @default(LOW)
+  createdAt DateTime @default(now())
+  dueDate DateTime?
+  user User @relation(fields: [userId], references: [id])
+  userId String @db.ObjectId
+}
+
+enum TaskStatus{
+  TO_DO
+  IN_PROGRESS
+  COMPLETED
+}
+
+enum TaskPriority{
+  LOW
+  MEDIUM
+  HIGH
+}

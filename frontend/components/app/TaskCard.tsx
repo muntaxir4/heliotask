@@ -22,7 +22,7 @@ export default function TaskCard({
             <p>{item.description}</p>
             <p>{item.status}</p>
             <p>{item.priority}</p>
-            <p>{item.due_date}</p>
+            <p>{item.dueDate}</p>
           </div>
         </div>
       )}
