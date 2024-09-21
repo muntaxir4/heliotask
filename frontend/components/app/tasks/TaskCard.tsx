@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/popover";
 import EditDialog from "./EditDialog";
 import DeleteTask from "./DeleteTask";
+import { cn } from "@/lib/utils";
 
 const formatDate = (dateString: string) => {
   const options: Intl.DateTimeFormatOptions = {
@@ -20,7 +21,12 @@ const formatDate = (dateString: string) => {
 
 export default function TaskCard({ item }: { item: Task }) {
   return (
-    <div className="bg-card border p-3 m-2 rounded-lg shadow-lg grid gap-2 content-start hover:ring-2">
+    <div
+      className={cn(
+        "bg-card border p-3 m-2 rounded-lg shadow-lg grid gap-2 content-start hover:ring-2",
+        item?.isNew && "ring-1 ring-emerald-400"
+      )}
+    >
       <div className="w-full flex justify-end h-fit">
         <Popover>
           <PopoverTrigger>

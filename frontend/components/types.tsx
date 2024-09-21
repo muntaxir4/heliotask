@@ -7,6 +7,7 @@ export interface Task {
   status: string;
   priority: string;
   dueDate: string;
+  isNew?: boolean;
 }
 
 export interface User {

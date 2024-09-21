@@ -42,7 +42,7 @@ function DatePickerDemo({
         <Button
           variant={"outline"}
           className={cn(
-            "justify-start text-left font-normal sm:col-span-2",
+            "justify-start text-left font-normal md:col-span-2",
             !date && "text-muted-foreground"
           )}
         >
@@ -140,9 +140,9 @@ export default function EditForm({ task }: { task: Task }) {
           </SelectContent>
         </Select>
       </div>
-      <div className="grid sm:grid-cols-4 w-full gap-2">
+      <div className="grid md:grid-cols-4 w-full gap-2">
         <DatePickerDemo date={date} setDate={setDate} />
-        <Button type="submit" className="sm:col-start-4" disabled={isDisabled}>
+        <Button type="submit" className="md:col-start-4" disabled={isDisabled}>
           Confirm Edit
         </Button>
         <DialogClose ref={dialogCloseRef} />

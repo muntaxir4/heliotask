@@ -6,6 +6,8 @@ import { useRecoilValue } from "recoil";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import axios from "axios";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { EllipsisVerticalIcon } from "lucide-react";
 
 async function handleLogout() {
   try {
@@ -27,13 +29,20 @@ export default function LoggedinUser() {
         <AvatarFallback>{user?.name[0]}</AvatarFallback>
       </Avatar>
       <p>{user?.name}</p>
-      <Badge
-        variant={"secondary"}
-        className="cursor-pointer"
-        onClick={handleLogout}
-      >
-        Logout
-      </Badge>
+      <Popover>
+        <PopoverTrigger>
+          <EllipsisVerticalIcon size={18} />
+        </PopoverTrigger>
+        <PopoverContent className="w-fit">
+          <Badge
+            variant={"secondary"}
+            className="cursor-pointer"
+            onClick={handleLogout}
+          >
+            Logout
+          </Badge>
+        </PopoverContent>
+      </Popover>
     </div>
   );
 }
