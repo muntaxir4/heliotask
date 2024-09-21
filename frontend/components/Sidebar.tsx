@@ -26,7 +26,7 @@ export default function Sidebar() {
       </SheetTrigger>
       <SheetContent
         side={"left"}
-        className="bg-background/90 opacity-100 flex flex-col justify-between"
+        className="bg-background opacity-100 flex flex-col justify-between"
       >
         <SheetHeader>
           <SheetTitle>Available Routes</SheetTitle>

@@ -19,7 +19,7 @@ export default function EditDialog({ task }: { task: Task }) {
           Edit
         </Button>
       </DialogTrigger>
-      <DialogContent className="bg-card min-w-[80%] w-fit grid">
+      <DialogContent className="min-w-[80%] w-fit grid">
         <DialogHeader>
           <DialogTitle>Edit a Task</DialogTitle>
           <DialogDescription>
