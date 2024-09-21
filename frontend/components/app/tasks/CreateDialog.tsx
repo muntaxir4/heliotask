@@ -6,6 +6,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
 import { PencilIcon } from "lucide-react";
 import CreateForm from "./CreateForm";
 
@@ -13,7 +20,14 @@ export default function CreateDialog() {
   return (
     <Dialog>
       <DialogTrigger>
-        <PencilIcon />
+        <TooltipProvider>
+          <Tooltip delayDuration={40}>
+            <TooltipTrigger>
+              <PencilIcon />
+            </TooltipTrigger>
+            <TooltipContent>Create a Task</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </DialogTrigger>
       <DialogContent className="bg-card w-[80%] grid">
         <DialogHeader>

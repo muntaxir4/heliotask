@@ -181,4 +181,40 @@ user.post("/tasks", async (req, res) => {
   }
 });
 
+user.put("/update-task", async (req, res) => {
+  try {
+    const { taskId, title, description, status, priority, dueDateTime } =
+      req.body;
+    if (!taskId)
+      return res.status(400).json({ message: "Task ID is required" });
+    const task = await prisma.task.update({
+      where: { id: taskId },
+      data: {
+        title,
+        description,
+        status,
+        priority,
+        dueDate: dueDateTime ? new Date(dueDateTime) : null,
+      },
+    });
+    res.status(200).json({ message: "Task updated successfully", task });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+user.delete("/delete-task", async (req, res) => {
+  try {
+    const { taskId } = req.query;
+    if (!taskId)
+      return res.status(400).json({ message: "Task ID is required" });
+    await prisma.task.delete({ where: { id: taskId as string } });
+    res.status(200).json({ message: "Task deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 export default user;

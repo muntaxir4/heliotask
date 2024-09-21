@@ -4,10 +4,12 @@ import { refetchState, userState } from "@/store/atoms";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
-import { statusColumns } from "./Home";
+import { statusColumns } from "./AppHome";
 import { DroppableProvided } from "react-beautiful-dnd";
-import TaskCard from "./TaskCard";
+import DraggableTaskCard from "./DraggableTaskCard";
 import { useEffect } from "react";
+import Loading from "../Loading";
+import { Task } from "../types";
 
 async function fetchKanbanTasks(id: string) {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -36,7 +38,7 @@ export default function StatusColumn({
     refetch();
   }, [isRefetch]);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
   else if (error) return <div>Error fetching {column.title} tasks</div>;
   return (
     <div
@@ -46,8 +48,8 @@ export default function StatusColumn({
     >
       <p className="font-semibold text-lg text-center">{column.title}</p>
       <div className="">
-        {data.statusTasks?.map((item: any, index: any) => (
-          <TaskCard key={index} item={item} index={index} />
+        {data.statusTasks?.map((item: Task, index: number) => (
+          <DraggableTaskCard key={index} item={item} index={index} />
         ))}
       </div>
       {provided.placeholder}

@@ -20,7 +20,6 @@ function GoogleSigninHandler() {
     flow: "auth-code",
   });
   async function handleGoogleSignin({ code }: { code: string }) {
-    console.log(code, toast);
     toast({
       title: "Logging in",
       duration: 15000,
@@ -41,19 +40,30 @@ function GoogleSigninHandler() {
         title: "Logged in",
         duration: 2000,
       });
+      localStorage?.setItem("isLoggedIn", "true");
       router.push("/app");
-    } catch (error) {
+    } catch {
       toast({
-        title: "Error",
-        description: "Signin with Google failed",
+        title: "Signin with Google failed",
         variant: "destructive",
         duration: 3000,
       });
     }
   }
   return (
-    <div onClick={() => googleLogin()}>
-      <Button className="rounded-full">Continue with Google</Button>
+    <div className="text-center">
+      <Button
+        variant={"secondary"}
+        className="rounded-full tracking-wider text-lg"
+        onClick={() => googleLogin()}
+      >
+        Continue with{" "}
+        <img
+          src="https://www.vectorlogo.zone/logos/google/google-ar21.svg"
+          alt="Google Logo"
+          className="w-16 h-8 mx-2"
+        />
+      </Button>
     </div>
   );
 }

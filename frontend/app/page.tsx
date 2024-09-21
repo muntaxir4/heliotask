@@ -1,10 +1,5 @@
-import GoogleSignin from "@/components/GoogleSignin";
+import Home from "@/components/Home";
 
-export default function Home() {
-  return (
-    <div>
-      <p>Landing Page</p>
-      <GoogleSignin />
-    </div>
-  );
+export default function HomePage() {
+  return <Home />;
 }

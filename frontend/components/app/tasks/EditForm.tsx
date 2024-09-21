@@ -18,7 +18,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Dispatch, SetStateAction, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
@@ -26,7 +26,8 @@ import { useToast } from "@/hooks/use-toast";
 import axios from "axios";
 import { DialogClose } from "@/components/ui/dialog";
 import { useSetRecoilState } from "recoil";
-import { tasksState } from "@/store/atoms";
+import { refetchState } from "@/store/atoms";
+import { Task } from "@/components/types";
 
 function DatePickerDemo({
   date,
@@ -61,12 +62,17 @@ function DatePickerDemo({
   );
 }
 
-export default function CreateForm() {
-  const [date, setDate] = useState<Date>();
+export default function EditForm({ task }: { task: Task }) {
+  const defaultDate = task?.dueDate ? new Date(task.dueDate) : undefined;
+  const [date, setDate] = useState<Date | undefined>(defaultDate);
   const { toast } = useToast();
   const dialogCloseRef = useRef<HTMLButtonElement>(null);
-  const [isDisabled, setIsDisabled] = useState(false);
-  const setTasks = useSetRecoilState(tasksState);
+  const [isDisabled, setIsDisabled] = useState(true);
+  const setRefetch = useSetRecoilState(refetchState);
+
+  useEffect(() => {
+    if (date !== defaultDate) setIsDisabled(false);
+  }, [date]);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -74,9 +80,10 @@ export default function CreateForm() {
     const formData = new FormData(event.currentTarget);
     try {
       const API_URL = process.env.NEXT_PUBLIC_API_URL;
-      const response = await axios.post(
-        API_URL + "/user/create-task",
+      await axios.put(
+        API_URL + "/user/update-task",
         {
+          taskId: task?.id,
           title: formData.get("title"),
           description: formData.get("description"),
           status: formData.get("status"),
@@ -85,30 +92,34 @@ export default function CreateForm() {
         },
         { withCredentials: true }
       );
+      setRefetch((prev) => !prev);
       toast({
-        title: "Task Created",
+        title: "Task Edited",
       });
-      setTasks((tasks) => [response.data.task, ...tasks]);
     } catch {
       toast({
-        title: "Failed to create task",
+        title: "Failed to edit task",
         variant: "destructive",
       });
     }
     dialogCloseRef.current?.click();
   }
   return (
-    <form className="grid gap-2" onSubmit={handleSubmit}>
+    <form
+      className="grid gap-2"
+      onSubmit={handleSubmit}
+      onChange={() => setIsDisabled(false)}
+    >
       <div>
         <label>Title: *</label>
-        <Input type="text" name="title" required />
+        <Input type="text" name="title" required defaultValue={task?.title} />
       </div>
       <div>
         <label>Description:</label>
-        <Textarea name="description" />
+        <Textarea name="description" defaultValue={task?.description} />
       </div>
       <div className="grid grid-cols-2 gap-1">
-        <Select name="status">
+        <Select name="status" defaultValue={task?.status}>
           <SelectTrigger>
             <SelectValue placeholder="Status" />
           </SelectTrigger>
@@ -118,7 +129,7 @@ export default function CreateForm() {
             <SelectItem value="COMPLETED">Completed</SelectItem>
           </SelectContent>
         </Select>
-        <Select name="priority">
+        <Select name="priority" defaultValue={task?.priority}>
           <SelectTrigger>
             <SelectValue placeholder="Priority" />
           </SelectTrigger>
@@ -132,7 +143,7 @@ export default function CreateForm() {
       <div className="grid sm:grid-cols-4 w-full gap-2">
         <DatePickerDemo date={date} setDate={setDate} />
         <Button type="submit" className="sm:col-start-4" disabled={isDisabled}>
-          Create Task
+          Confirm Edit
         </Button>
         <DialogClose ref={dialogCloseRef} />
       </div>

@@ -4,6 +4,7 @@ import { userState } from "@/store/atoms";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useSetRecoilState } from "recoil";
+import Loading from "../Loading";
 
 async function getUser() {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -23,7 +24,7 @@ export default function Authenticate({
     queryFn: getUser,
   });
   const setUser = useSetRecoilState(userState);
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
   else if (isError) {
     window.location.href = "/";
     return <div>Error...</div>;

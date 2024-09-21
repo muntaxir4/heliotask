@@ -2,6 +2,7 @@
 import { Task } from "../types";
 import { Draggable } from "react-beautiful-dnd";
 import { Badge } from "@/components/ui/badge";
+import { GripHorizontal } from "lucide-react";
 
 const formatDate = (dateString: string) => {
   const options: Intl.DateTimeFormatOptions = {
@@ -12,7 +13,7 @@ const formatDate = (dateString: string) => {
   return new Date(dateString).toLocaleDateString(undefined, options);
 };
 
-export default function TaskCard({
+export default function DraggableTaskCard({
   item,
   index,
 }: {
@@ -27,19 +28,22 @@ export default function TaskCard({
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <div className="border p-3 m-2 rounded-lg bg-background grid gap-2 hover:ring-1">
-            <p className="font-semibold">{item.title}</p>
+          <div className="border p-3 m-2 rounded-lg bg-card grid gap-2 hover:ring-1">
+            <div className="flex justify-between">
+              <p className="font-semibold">{item.title}</p>
+              <GripHorizontal className="h-4" />
+            </div>
             <p className="text-slate-500 tracking-wide">{item.description}</p>
             <div className="flex gap-2">
               <Badge
                 variant={"secondary"}
-                className="rounded-full bg-yellow-100"
+                className="rounded-full bg-yellow-100 text-black"
               >
                 Priority: {item.priority}
               </Badge>
               <Badge
                 variant={"secondary"}
-                className={`text-foreground rounded-full ${
+                className={`rounded-full text-black ${
                   item.status === "COMPLETED" ? "bg-green-300" : "bg-red-300"
                 }`}
               >

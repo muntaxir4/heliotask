@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import {
   DragDropContext,
   Droppable,
@@ -18,7 +17,7 @@ export const statusColumns = [
   { id: "COMPLETED", title: "Completed" },
 ];
 
-export default function Home() {
+export default function AppHome() {
   resetServerContext();
   const setRefetch = useSetRecoilState(refetchState);
   const { toast } = useToast();
@@ -42,7 +41,7 @@ export default function Home() {
         toast({
           title: "Task Status Updated",
         });
-      } catch (error) {
+      } catch {
         toast({
           title: "Error updating task status",
           variant: "destructive",

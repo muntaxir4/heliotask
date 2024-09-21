@@ -22,7 +22,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
           defaultTheme="light"
           enableSystem
           disableTransitionOnChange
-          forcedTheme="light"
+          // forcedTheme="light"
         >
           <main>{children}</main>
           <Toaster />

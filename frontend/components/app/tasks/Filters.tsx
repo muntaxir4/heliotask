@@ -14,13 +14,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { Button } from "@/components/ui/button";
 import { CalendarIcon, ChevronDown } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
-import { addDays, format } from "date-fns";
-import { DateRange } from "react-day-picker";
+import { format } from "date-fns";
 
 const statusOptions: {
   label: string;
@@ -107,8 +106,8 @@ export default function Filters({
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="grid w-fit">
-                {statusOptions.map((option) => (
-                  <div className="flex gap-2">
+                {statusOptions.map((option, index) => (
+                  <div key={index} className="flex gap-2">
                     <input
                       type="checkbox"
                       name={option.label}
@@ -137,8 +136,8 @@ export default function Filters({
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="grid w-fit">
-                {priorityOptions.map((option) => (
-                  <div className="flex gap-2">
+                {priorityOptions.map((option, index) => (
+                  <div key={index} className="flex gap-2">
                     <input
                       type="checkbox"
                       name={option.label}
@@ -169,7 +168,7 @@ export default function Filters({
         <Select
           value={filters.sortBy}
           onValueChange={(e) => {
-            // @ts-ignore
+            // @ts-expect-error - 'e' value is a string
             setFilters((prev) => ({ ...prev, sortBy: e }));
           }}
         >
