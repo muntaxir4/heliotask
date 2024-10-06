@@ -74,11 +74,15 @@ export class UserService {
     }
   }
 
-  async changeTaskStatus(taskId: string, status: Task['status']) {
+  async changeTaskStatus(
+    userId: string,
+    taskId: string,
+    status: Task['status'],
+  ) {
     try {
       if (!status) throw new BadRequestException('Task ID and status required');
       const task = await prisma.task.update({
-        where: { id: taskId },
+        where: { id: taskId, userId },
         data: { status },
       });
       return { message: 'Task status updated', task };
@@ -190,7 +194,7 @@ export class UserService {
         reqBody;
       if (!taskId) throw new BadRequestException('Task ID is required');
       const task = await prisma.task.update({
-        where: { id: taskId },
+        where: { id: taskId, userId: reqBody.userId },
         data: {
           title,
           description,
@@ -206,11 +210,11 @@ export class UserService {
     }
   }
 
-  async deleteTask(taskId: string) {
+  async deleteTask(userId: string, taskId: string) {
     try {
       if (!taskId) throw new BadRequestException('Task ID is required');
       await prisma.task.delete({
-        where: { id: taskId },
+        where: { id: taskId, userId },
       });
       return { message: 'Task deleted successfully' };
     } catch (error) {

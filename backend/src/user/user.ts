@@ -77,7 +77,7 @@ user.post("/change-task-status", async (req, res) => {
     if (!taskId || !status)
       return res.status(400).json({ message: "Task ID and status required" });
     const task = await prisma.task.update({
-      where: { id: taskId },
+      where: { id: taskId, userId: req.body.userId },
       data: { status },
     });
     res.status(200).json({ message: "Task status updated", task });
@@ -183,12 +183,19 @@ user.post("/tasks", async (req, res) => {
 
 user.put("/update-task", async (req, res) => {
   try {
-    const { taskId, title, description, status, priority, dueDateTime } =
-      req.body;
+    const {
+      userId,
+      taskId,
+      title,
+      description,
+      status,
+      priority,
+      dueDateTime,
+    } = req.body;
     if (!taskId)
       return res.status(400).json({ message: "Task ID is required" });
     const task = await prisma.task.update({
-      where: { id: taskId },
+      where: { id: taskId, userId },
       data: {
         title,
         description,
@@ -209,7 +216,9 @@ user.delete("/delete-task", async (req, res) => {
     const { taskId } = req.query;
     if (!taskId)
       return res.status(400).json({ message: "Task ID is required" });
-    await prisma.task.delete({ where: { id: taskId as string } });
+    await prisma.task.delete({
+      where: { id: taskId as string, userId: req.body.userId },
+    });
     res.status(200).json({ message: "Task deleted successfully" });
   } catch (error) {
     console.error(error);

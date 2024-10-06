@@ -29,8 +29,12 @@ export class UserController {
   }
 
   @Post('/change-task-status')
-  async changeTaskStatus(@Body('taskId') taskId, @Body('status') status) {
-    return await this.userService.changeTaskStatus(taskId, status);
+  async changeTaskStatus(
+    @Body('userId') userId,
+    @Body('taskId') taskId,
+    @Body('status') status,
+  ) {
+    return await this.userService.changeTaskStatus(userId, taskId, status);
   }
 
   @Post('/tasks')
@@ -44,7 +48,7 @@ export class UserController {
   }
 
   @Delete('/delete-task')
-  async deleteTask(@Query('taskId') taskId) {
-    return await this.userService.deleteTask(taskId);
+  async deleteTask(@Body('userId') userId, @Query('taskId') taskId) {
+    return await this.userService.deleteTask(userId, taskId);
   }
 }
