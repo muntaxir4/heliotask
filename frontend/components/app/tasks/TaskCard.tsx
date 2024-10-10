@@ -39,7 +39,7 @@ export default function TaskCard({ item }: { item: Task }) {
         </Popover>
       </div>
       <p className="font-semibold">{item.title}</p>
-      <p className="text-slate-500 tracking-wide">{item.description}</p>
+      <pre className="text-slate-500 tracking-wide">{item.description}</pre>
       <div className="flex gap-2">
         <Badge
           variant={"secondary"}
