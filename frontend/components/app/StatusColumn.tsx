@@ -49,7 +49,7 @@ export default function StatusColumn({
       <p className="font-semibold text-lg text-center">{column.title}</p>
       <div>
         {data.statusTasks.length === 0 && (
-          <p className="text-center">No Tasks here</p>
+          <p className="text-center">No Task here</p>
         )}
         {data.statusTasks?.map((item: Task, index: number) => (
           <DraggableTaskCard key={index} item={item} index={index} />
