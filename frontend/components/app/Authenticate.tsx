@@ -26,6 +26,7 @@ export default function Authenticate({
   const setUser = useSetRecoilState(userState);
   if (isLoading) return <Loading />;
   else if (isError) {
+    localStorage?.removeItem("isLoggedIn");
     window.location.href = "/";
     return <div>Error...</div>;
   } else if (data) {

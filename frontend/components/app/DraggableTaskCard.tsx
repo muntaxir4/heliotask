@@ -33,7 +33,9 @@ export default function DraggableTaskCard({
               <p className="font-semibold">{item.title}</p>
               <GripHorizontal className="h-4" />
             </div>
-            <p className="text-slate-500 tracking-wide">{item.description}</p>
+            <pre className="text-slate-500 tracking-wide">
+              {item.description}
+            </pre>
             <div className="flex gap-2">
               <Badge
                 variant={"secondary"}
