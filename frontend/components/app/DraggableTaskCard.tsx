@@ -33,7 +33,7 @@ export default function DraggableTaskCard({
               <p className="font-semibold">{item.title}</p>
               <GripHorizontal className="h-4" />
             </div>
-            <pre className="text-slate-500 tracking-wide">
+            <pre className="text-slate-500 tracking-wide w-full overflow-auto pb-2">
               {item.description}
             </pre>
             <div className="flex gap-2">
