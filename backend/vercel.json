@@ -14,7 +14,7 @@
         { "key": "Access-Control-Allow-Credentials", "value": "true" },
         {
           "key": "Access-Control-Allow-Origin",
-          "value": "https://heliotask.mallik.tech"
+          "value": "https://heliotask.muntasirm.com"
         },
         {
           "key": "Access-Control-Allow-Methods",

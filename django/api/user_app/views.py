@@ -30,6 +30,12 @@ def tasks_view(request):
         return get_filtered_tasks(request)
 
 
+@require_GET
+def get_taskId(requests: HttpRequest):
+    task_id = requests.GET.get("taskId")
+    return JsonResponse({"taskId": task_id}, status=200)
+
+
 @require_POST
 @authenticate_user
 def create_task(request: HttpRequest):

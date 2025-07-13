@@ -72,7 +72,7 @@ auth.post("/google", async (req, res) => {
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       secure: process.env.NODE_ENV === "production",
       domain:
-        process.env.NODE_ENV === "production" ? ".mallik.tech" : undefined,
+        process.env.NODE_ENV === "production" ? ".muntasirm.com" : undefined,
     });
     res.status(200).json({ message: "Google Signin Success" });
   } catch (error) {
@@ -87,7 +87,7 @@ auth.post("/logout", async (req, res) => {
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       secure: process.env.NODE_ENV === "production",
       domain:
-        process.env.NODE_ENV === "production" ? ".mallik.tech" : undefined,
+        process.env.NODE_ENV === "production" ? ".muntasirm.com" : undefined,
     });
     res.status(200).json({ message: "Logout Success" });
   } catch (error) {
